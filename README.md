@@ -53,10 +53,6 @@ See [Usage](https://espnet.github.io/espnet/tutorial.html).
 
 go to [docker/](docker/) and follow [instructions](https://espnet.github.io/espnet/docker.html).
 
-## Contribution
-Thank you for taking times for ESPnet! Any contributions to ESPNet are welcome and feel free to ask any questions or requests to [issues](https://github.com/espnet/espnet/issues).
-If it's the first contribution to ESPnet for you,  please follow the [contribution guide](CONTRIBUTING.md).
-
 ## Results and demo
 
 You can find useful tutorials and demos in [Interspeech 2019 Tutorial](https://github.com/espnet/interspeech2019-tutorial)
