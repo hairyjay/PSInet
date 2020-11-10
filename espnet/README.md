@@ -1,3 +1,7 @@
+Updated files to focus on WSJ data.
+
+Keep original README file here for reference.
+
 <div align="left"><img src="doc/image/espnet_logo1.png" width="550"/></div>
 
 # ESPnet: end-to-end speech processing toolkit
