@@ -30,7 +30,8 @@ and also follows [Kaldi](http://kaldi-asr.org/) style data processing, feature e
 ### ASR results
 TO-DO: Update result of WSJ data
 
-We list the character error rate (CER) and word error rate (WER) of major ASR tasks.
+Below is the character error rate (CER) and word error rate (WER) of major ASR tasks using ESPnet.
+Our task is to make improvements through feature processing.
 
 | Task                   | CER (%) | WER (%) | Pretrained model|
 | -----------            | :----:  | :----:  | :----:                                                                                                                                                                |
