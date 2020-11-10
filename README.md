@@ -41,12 +41,6 @@ and also follows [Kaldi](http://kaldi-asr.org/) style data processing, feature e
 
 ### Kaldi style complete recipe
 - Support numbers of `ASR` recipes (WSJ, Switchboard, CHiME-4/5, Librispeech, TED, CSJ, AMI, HKUST, Voxforge, REVERB, etc.)
-- Support numbers of `TTS` recipes with a similar manner to the ASR recipe (LJSpeech, LibriTTS, M-AILABS, etc.)
-- Support numbers of `ST` recipes (Fisher-CallHome Spanish, Libri-trans, IWSLT'18, How2, Must-C, Mboshi-French, etc.)
-- Support numbers of `MT` recipes (IWSLT'16, the above ST recipes etc.)
-- Support speech separation and recognition recipe (WSJ-2mix)
-- Support voice conversion recipe (VCC2020 baseline) (new!)
-
 
 ### ASR: Automatic Speech Recognition
 - **State-of-the-art performance** in several ASR benchmarks (comparable/superior to hybrid DNN/HMM and CTC)
