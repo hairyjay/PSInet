@@ -48,9 +48,6 @@ Our task is to make improvements through feature processing.
 | WSJ dev93/eval92              | 3.2/2.1     | 7.0/4.7     | N/A |
 |  **ESPnet2** WSJ dev93/eval92              | 2.7/1.8     | 6.6/4.6     | [link](https://github.com/espnet/espnet/tree/master/egs2/wsj/asr1#using-transformer-lm-asr-model-is-same-as-the-above-lm_weight12-ctc_weight03-beam_size20) |
 
-Note that the performance of the CSJ, HKUST, and Librispeech tasks was significantly improved by using the wide network (#units = 1024) and large subword units if necessary reported by [RWTH](https://arxiv.org/pdf/1805.03294.pdf).
-
-If you want to check the results of the other recipes, please check `egs/<name_of_recipe>/asr1/RESULTS.md`.
 
 </div></details>
 
