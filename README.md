@@ -7,7 +7,7 @@ ESPnet is an end-to-end speech processing toolkit, mainly focuses on end-to-end 
 ESPnet uses [chainer](https://chainer.org/) and [pytorch](http://pytorch.org/) as a main deep learning engine,
 and also follows [Kaldi](http://kaldi-asr.org/) style data processing, feature extraction/format, and recipes to provide a complete setup for speech recognition and other speech processing experiments.
 
-We focus on a feature exploration task of trying to find new ways to process source signals in ASR systems.
+#### We focus on a feature exploration task of trying to find new ways to process source signals in ASR systems.
 
 ### ASR: Automatic Speech Recognition
 - **State-of-the-art performance** in several ASR benchmarks (comparable/superior to hybrid DNN/HMM and CTC)
