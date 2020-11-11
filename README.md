@@ -7,7 +7,7 @@ ESPnet is an end-to-end speech processing toolkit, mainly focuses on end-to-end 
 ESPnet uses [chainer](https://chainer.org/) and [pytorch](http://pytorch.org/) as a main deep learning engine,
 and also follows [Kaldi](http://kaldi-asr.org/) style data processing, feature extraction/format, and recipes to provide a complete setup for speech recognition and other speech processing experiments.
 
-We focus on a feature exploration task of trying to find new ways to process source signals in ASR systems.
+#### We focus on a feature exploration task of trying to find new ways to process source signals in ASR systems.
 
 ### ASR: Automatic Speech Recognition
 - **State-of-the-art performance** in several ASR benchmarks (comparable/superior to hybrid DNN/HMM and CTC)
@@ -26,47 +26,13 @@ We focus on a feature exploration task of trying to find new ways to process sou
 - ASR examples for supporting endangered language documentation (Please refer to egs/puebla_nahuatl and egs/yoloxochitl_mixtec for details)
 
 
-## Installation
-- If you intend to do full experiments including DNN training, then see [Installation](https://espnet.github.io/espnet/installation.html).
-- If you just need the Python module only:
-    ```sh
-    pip install espnet
-    # To install latest
-    # pip install git+https://github.com/espnet/espnet
-    ```
-
-    You need to install some packages.
-
-    ```sh
-    pip install torch
-    pip install chainer==6.0.0 cupy==6.0.0    # [Option] If you'll use ESPnet1
-    pip install torchaudio                    # [Option] If you'll use enhancement task
-    pip install torch_optimizer               # [Option] If you'll use additional optimizers in ESPnet2
-    ```
-
-    There are some required packages depending on each task other than above. If you meet ImportError, please intall them at that time.
-
-## Usage
-See [Usage](https://espnet.github.io/espnet/tutorial.html).
-
-## Docker Container
-
-go to [docker/](docker/) and follow [instructions](https://espnet.github.io/espnet/docker.html).
-
-## Contribution
-Thank you for taking times for ESPnet! Any contributions to ESPNet are welcome and feel free to ask any questions or requests to [issues](https://github.com/espnet/espnet/issues).
-If it's the first contribution to ESPnet for you,  please follow the [contribution guide](CONTRIBUTING.md).
-
-## Results and demo
-
-You can find useful tutorials and demos in [Interspeech 2019 Tutorial](https://github.com/espnet/interspeech2019-tutorial)
 
 ### ASR results
+TO-DO: Update result of WSJ data
 
-<details><summary>expand</summary><div>
+Below is the character error rate (CER) and word error rate (WER) of major ASR tasks using ESPnet.
 
-
-We list the character error rate (CER) and word error rate (WER) of major ASR tasks.
+Our task is to make improvements through feature processing.
 
 | Task                   | CER (%) | WER (%) | Pretrained model|
 | -----------            | :----:  | :----:  | :----:                                                                                                                                                                |
@@ -82,9 +48,6 @@ We list the character error rate (CER) and word error rate (WER) of major ASR ta
 | WSJ dev93/eval92              | 3.2/2.1     | 7.0/4.7     | N/A |
 |  **ESPnet2** WSJ dev93/eval92              | 2.7/1.8     | 6.6/4.6     | [link](https://github.com/espnet/espnet/tree/master/egs2/wsj/asr1#using-transformer-lm-asr-model-is-same-as-the-above-lm_weight12-ctc_weight03-beam_size20) |
 
-Note that the performance of the CSJ, HKUST, and Librispeech tasks was significantly improved by using the wide network (#units = 1024) and large subword units if necessary reported by [RWTH](https://arxiv.org/pdf/1805.03294.pdf).
-
-If you want to check the results of the other recipes, please check `egs/<name_of_recipe>/asr1/RESULTS.md`.
 
 </div></details>
 
