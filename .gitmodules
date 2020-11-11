@@ -1,0 +1,3 @@
+[submodule "espnet"]
+	path = espnet
+	url = git@professional.github.com:Rav830/espnet.git
