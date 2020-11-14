@@ -3,6 +3,20 @@
 
 This is a Speech Representation project based on ESPnet
 
+
+## Starting Instructions
+
+This github uses submodules so you need to use `git clone --recurse-submodules git:github.com/hairyjay/PSInet.git` to get all of the code.
+
+To install Espnet for use read the espnetInstallConda instructions. 
+
+Then to run and get the results that we reported in the midterm report cd into the espnet/egs2/wsj/asr1/
+
+And then run the command
+`./run.sh --ngpu 1 --skip_data_prep false --skip_train false` and wait for the processing to complete. Note you will need the both parts of the WSJ dataset and set the paths for those files in the 'espnet/egs2/TEMPLATE/asr1/db.sh' file and the data is available through the TA's that share the Slack on Prof Watanabe's.
+
+## Other Details
+
 ESPnet is an end-to-end speech processing toolkit, mainly focuses on end-to-end speech recognition and end-to-end text-to-speech.
 ESPnet uses [chainer](https://chainer.org/) and [pytorch](http://pytorch.org/) as a main deep learning engine,
 and also follows [Kaldi](http://kaldi-asr.org/) style data processing, feature extraction/format, and recipes to provide a complete setup for speech recognition and other speech processing experiments.

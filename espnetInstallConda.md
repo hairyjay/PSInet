@@ -1,4 +1,4 @@
-Installation steps to get ESPnet installed on my laptop using conda.
+Installation steps to get ESPnet installed on my laptop and server using conda.
 
 1. create a conda environment
    install miniconda for your ubuntu installation (technically espnet does an install of miniconda for you but Rav is working off of a preinitialized miniconda) 
@@ -26,7 +26,7 @@ ln -s ../ci/tools/kaldi .
 cd <espnet root>/tools
 . ./setup_cuda_env.sh <cuda-root>
 ```
-// Note for Rav and his Serve Setup the path to cuda root is ~/Classwork/Project/cuda because symlink b.s. had to happen.
+// Note for Rav and his Server Setup the path to cuda root is ~/Classwork/Project/cuda because symlink b.s. had to happen to properly find the desired library and header files.
 
 
 3b. set up with the conda install we have
@@ -35,7 +35,7 @@ cd <espnet-root>/tools
 CONDA_TOOLS_DIR=$(dirname ${CONDA_EXE})/..
 ./setup_anaconda.sh ${CONDA_TOOLS_DIR} $env [python-version]
 ```
-where $env is the environment name  like we mentioned earlier
+where $env is the environment name  like we mentioned earlier and 3.7 is used as the argument for python-version to properly maintain consistenty
 
 3ba. Debug
 If you get an error that JAVA_HOME is an unbound variable then that means that Java is not installed on your system and can be done inside anaconda with 
@@ -49,3 +49,6 @@ make
 Run the below to check the installation
 cd <espnet-root>/tools
 . ./activate_python.sh; python3 check_install.py
+
+
+After this the environment should be appropriately set up to run and get the results.
