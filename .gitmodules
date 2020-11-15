@@ -1,3 +1,6 @@
 [submodule "espnet"]
 	path = espnet
 	url = git@professional.github.com:Rav830/espnet.git
+[submodule "fairseq"]
+	path = fairseq
+	url = https://github.com/casssie-zhang/fairseq.git
