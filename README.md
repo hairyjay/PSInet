@@ -21,6 +21,8 @@ ESPnet is an end-to-end speech processing toolkit, mainly focuses on end-to-end 
 ESPnet uses [chainer](https://chainer.org/) and [pytorch](http://pytorch.org/) as a main deep learning engine,
 and also follows [Kaldi](http://kaldi-asr.org/) style data processing, feature extraction/format, and recipes to provide a complete setup for speech recognition and other speech processing experiments.
 
+Fairseq(-py) is a sequence modeling toolkit that allows researchers and developers to train custom models for translation, summarization, language modeling and other text generation tasks. Fairseq provides implementations and pre-trained models for us to reproduce results from Wav2Vec 2.0 and fine-tune on our target dataset.
+
 #### We focus on a feature exploration task of trying to find new ways to process source signals in ASR systems.
 
 ### ASR: Automatic Speech Recognition
@@ -105,6 +107,8 @@ Available pretrained models in the demo script are listed as below.
 
 [3] Shinji Watanabe, Takaaki Hori, Suyoun Kim, John R. Hershey and Tomoki Hayashi, "Hybrid CTC/Attention Architecture for End-to-End Speech Recognition," *IEEE Journal of Selected Topics in Signal Processing*, vol. 11, no. 8, pp. 1240-1253, Dec. 2017
 
+[4] Baevski, Alexei, et al. "wav2vec 2.0: A Framework for Self-Supervised Learning of Speech Representations." (2020).
+
 ## Citations
 
 ```
@@ -141,6 +145,12 @@ Available pretrained models in the demo script are listed as below.
     publisher = "Association for Computational Linguistics",
     url = "https://www.aclweb.org/anthology/2020.acl-demos.34",
     pages = "302--311",
+}
+@inproceedings{ott2019fairseq,
+  title = {fairseq: A Fast, Extensible Toolkit for Sequence Modeling},
+  author = {Myle Ott and Sergey Edunov and Alexei Baevski and Angela Fan and Sam Gross and Nathan Ng and David Grangier and Michael Auli},
+  booktitle = {Proceedings of NAACL-HLT 2019: Demonstrations},
+  year = {2019},
 }
 ```
 
