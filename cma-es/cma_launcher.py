@@ -21,10 +21,10 @@ import numpy as np
 
 import concurrent.futures
 
-BOUNDS = [np.array([20,  15,  5,]),
-          np.array([100, 40, 15,])]
+BOUNDS = [np.array([4,  15,  5,]),
+          np.array([32, 40, 15,])]
 
-init = np.array([25,25,10])
+init = np.array([5,25,10])
 
 def launch_run(hyperparameters, cuda_dev=-1, dup = ""):
     """
@@ -56,6 +56,7 @@ def launch_run(hyperparameters, cuda_dev=-1, dup = ""):
 
     hyperparameters = hyperparameters.astype(int)
     num_mel_bins, frame_length, frame_shift = hyperparameters
+    num_mel_bins *= 5
     
     
     #modify the files at the basepath
@@ -119,9 +120,9 @@ options.set('integer_variable', list(range(len(init))))
 #options.set('maxfevals', 32)
 #options.set('maxfevals', 8)
 #options.set('CMA_cmean', 4)
-options.set('CMA_stds', [2]*len(BOUNDS[0]))
+options.set('CMA_stds', [4]*len(BOUNDS[0]))
 
-es = cma.CMAEvolutionStrategy(init, 2, options)
+es = cma.CMAEvolutionStrategy(init, 4, options)
 f = cma.s.ft.IntegerMixedFunction(launch_run, np.arange(5))
 
 detailLog = open("allRuns.log", 'w')
