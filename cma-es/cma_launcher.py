@@ -113,6 +113,8 @@ def launch_run(hyperparameters, cuda_dev=-1, dup = ""):
 
 #print(launch_run(np.array([81,27,9]), 7))
 
+best_sol = cma.optimization_tools.BestSolution(x = [5,25,10], f = 13.5)
+
 options = cma.CMAOptions()
 options.set('bounds', BOUNDS)
 options.set('popsize', 4)
@@ -121,6 +123,7 @@ options.set('integer_variable', list(range(len(init))))
 #options.set('maxfevals', 8)
 #options.set('CMA_cmean', 4)
 options.set('CMA_stds', [4]*len(BOUNDS[0]))
+options.set('verb_append', best_sol.evalsall)
 
 es = cma.CMAEvolutionStrategy(init, 4, options)
 f = cma.s.ft.IntegerMixedFunction(launch_run, np.arange(5))
