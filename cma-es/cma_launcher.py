@@ -107,8 +107,10 @@ def launch_run(hyperparameters, cuda_dev=-1, dup = ""):
         retval = (v1 + v2)/2
         print(retval)
 
-    #delete the dump 
-    
+    #delete the dump and exp folder
+    delRes = subprocess.run(["rm", "-r", basepath+"dump/"])
+    delRes = subprocess.run(["rm", "-r", basepath+"exp/"])
+
     return retval
 
 #print(launch_run(np.array([81,27,9]), 7))
