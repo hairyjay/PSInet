@@ -45,7 +45,7 @@ def launch_run(hyperparameters, cuda_dev=-1, dup = ""):
     num_mel_bins, frame_length, frame_shift = hyperparameters
     num_mel_bins *= 5
 
-    print("RUNNING: " + dup + "\nHYPERPARAMETER VALUES: num_mel_bins = %s, frame_length = %s, frame_shift = %s\n"%(num_mel_bins, frame_length, frame_shift))
+    print("RUNNING: " + dup + "\nHYPERPARAMETER VALUES: num_mel_bins = %s, frame_length = %s, frame_shift = %s\n\n\n"%(num_mel_bins, frame_length, frame_shift))
 
     if(cuda_dev == -1):
         raise Exception("incorrect cuda device")
