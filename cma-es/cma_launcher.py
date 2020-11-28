@@ -123,8 +123,6 @@ def try_values(es, dev=-1, dup = ""):
         i += 1
     return attempt, result
 
-best_sol = cma.optimization_tools.BestSolution(x = [16,25,10], f = 13.5)
-
 options = cma.CMAOptions()
 options.set('bounds', BOUNDS)
 options.set('popsize', 4)
@@ -133,7 +131,6 @@ options.set('integer_variable', list(range(len(init))))
 #options.set('maxfevals', 8)
 #options.set('CMA_cmean', 4)
 options.set('CMA_stds', [4,4,2])
-options.set('verb_append', best_sol.evalsall)
 
 es = cma.CMAEvolutionStrategy(init, 4, options)
 f = cma.s.ft.IntegerMixedFunction(launch_run, np.arange(5))
