@@ -41,7 +41,11 @@ def launch_run(hyperparameters, cuda_dev=-1, dup = ""):
         :return: evaluation metric
     """
 
-    print("RUNNING:" + dup + "\n\n")
+    hyperparameters = hyperparameters.astype(int)
+    num_mel_bins, frame_length, frame_shift = hyperparameters
+    num_mel_bins *= 5
+
+    print("RUNNING: " + dup + "\nHYPERPARAMETER VALUES: num_mel_bins = %s, frame_length = %s, frame_shift = %s\n"%(num_mel_bins, frame_length, frame_shift))
 
     if(cuda_dev == -1):
         raise Exception("incorrect cuda device")
@@ -53,10 +57,6 @@ def launch_run(hyperparameters, cuda_dev=-1, dup = ""):
     #command
     expType = 'fbank_pitch'
     cmd = "CUDA_VISIBLE_DEVICES=%s ./run.sh --ngpu 1 --feats_type %s" % (cuda_dev, expType)
-
-    hyperparameters = hyperparameters.astype(int)
-    num_mel_bins, frame_length, frame_shift = hyperparameters
-    num_mel_bins *= 5
     
     
     #modify the files at the basepath
