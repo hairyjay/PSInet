@@ -113,7 +113,17 @@ def launch_run(hyperparameters, cuda_dev=-1, dup = ""):
 
 #print(launch_run(np.array([81,27,9]), 7))
 
-best_sol = cma.optimization_tools.BestSolution(x = [5,25,10], f = 13.5)
+def try_values(es, dev=-1, dup = ""):
+    result = 1000
+    attempt = None
+    i = 0
+    while result >= 1000 and i < 50:
+        attempt = es.ask(number=1)[0]
+        result = launch_run(attempt, dev, dup)
+        i += 1
+    return attempt, result
+
+best_sol = cma.optimization_tools.BestSolution(x = [16,25,10], f = 13.5)
 
 options = cma.CMAOptions()
 options.set('bounds', BOUNDS)
@@ -122,7 +132,7 @@ options.set('integer_variable', list(range(len(init))))
 #options.set('maxfevals', 32)
 #options.set('maxfevals', 8)
 #options.set('CMA_cmean', 4)
-options.set('CMA_stds', [4]*len(BOUNDS[0]))
+options.set('CMA_stds', [4,4,2])
 options.set('verb_append', best_sol.evalsall)
 
 es = cma.CMAEvolutionStrategy(init, 4, options)
@@ -137,30 +147,35 @@ curFevals = 0
 #    print(es.ask())
 
 while curFevals != maxFevals:
-    attempts = es.ask()
+    #attempts = es.ask()
 
     #evaluate the 2 attempts by multi-threading the launch_run function
     with concurrent.futures.ThreadPoolExecutor() as executor:
-        future1 = executor.submit(launch_run, attempts[0], 6)
-        future2 = executor.submit(launch_run, attempts[1], 7, "-dup")
+        #future1 = executor.submit(launch_run, attempts[0], 6)
+        #future2 = executor.submit(launch_run, attempts[1], 7, "-dup")
+        future1 = executor.submit(try_values, es, 6)
+        future2 = executor.submit(try_values, es, 7, "-dup")
         
         if(future1.result() != 1000):
             curFevals += 1
         if(future2.result() != 1000):
             curFevals += 1
 
-        toTell = [future1.result(), future2.result()]
-        future1 = executor.submit(launch_run, attempts[2], 6)
-        future2 = executor.submit(launch_run, attempts[3], 7, "-dup")
+        attempts = [future1.result()[0], future2.result()[0]]
+        toTell = [future1.result()[1], future2.result()[1]]
+        #toTell = [future1.result(), future2.result()]
+        #future1 = executor.submit(launch_run, attempts[2], 6)
+        #future2 = executor.submit(launch_run, attempts[3], 7, "-dup")
         
-        if(future1.result() != 1000):
-            curFevals += 1
-        if(future2.result() != 1000):
-            curFevals += 1
+        #if(future1.result() != 1000):
+            #curFevals += 1
+        #if(future2.result() != 1000):
+            #curFevals += 1
 
-        toTell += [future1.result(), future2.result()]
+        #toTell += [future1.result(), future2.result()]
 
-        for i in range(4):
+        #for i in range(4):
+        for i in range(2):
             msg = str(toTell[i]) +  "\t" +str(attempts[i])
             detailLog.write(msg + "\n")
 
