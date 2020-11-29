@@ -174,7 +174,18 @@ while curFevals != maxFevals:
         #toTell += [future1.result(), future2.result()]
 
         #for i in range(4):
-        for i in range(2):
+        future1 = executor.submit(try_values, es, 6)
+        future2 = executor.submit(try_values, es, 7, "-dup")
+        
+        if(future1.result() != 1000):
+            curFevals += 1
+        if(future2.result() != 1000):
+            curFevals += 1
+
+        attempts = [future1.result()[0], future2.result()[0]]
+        toTell = [future1.result()[1], future2.result()[1]]
+        
+        for i in range(4):
             msg = str(toTell[i]) +  "\t" +str(attempts[i])
             detailLog.write(msg + "\n")
 
