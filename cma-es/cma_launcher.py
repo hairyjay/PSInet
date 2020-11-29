@@ -51,8 +51,8 @@ def launch_run(hyperparameters, cuda_dev=-1, dup = ""):
         raise Exception("incorrect cuda device")
 
 
-    basepath = "../espnet/egs2/wsj%s/asr1/"%(dup)
-    #basepath = "../espnet/egs2/wsj%s/asr1/"
+    #basepath = "../espnet/egs2/wsj%s/asr1/"%(dup)
+    basepath = "../espnet/egs2/an4%s/asr1/"%(dup)
 
     #command
     expType = 'fbank_pitch'
