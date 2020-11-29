@@ -51,8 +51,8 @@ def launch_run(hyperparameters, cuda_dev=-1, dup = ""):
         raise Exception("incorrect cuda device")
 
 
-    #basepath = "../espnet/egs2/wsj%s/asr1/"%(dup)
-    basepath = "../espnet/egs2/an4%s/asr1/"%(dup)
+    basepath = "../espnet/egs2/wsj%s/asr1/"%(dup)
+    #basepath = "../espnet/egs2/an4%s/asr1/"%(dup)
 
     #command
     expType = 'fbank_pitch'
@@ -95,6 +95,7 @@ def launch_run(hyperparameters, cuda_dev=-1, dup = ""):
     else:
         #assume success and read in the result
         exp_name = 'asr_train_asr_transformer_%s_char' %(expType)
+        #exp_name = 'asr_train_%s_bpe30' %(expType)
         with open(basepath+"exp/%s/RESULTS.md" %(exp_name), 'r') as f:
             data = []
             retval = -1
@@ -182,8 +183,8 @@ while curFevals != maxFevals:
         if(future2.result() != 1000):
             curFevals += 1
 
-        attempts = [future1.result()[0], future2.result()[0]]
-        toTell = [future1.result()[1], future2.result()[1]]
+        attempts += [future1.result()[0], future2.result()[0]]
+        toTell += [future1.result()[1], future2.result()[1]]
         
         for i in range(4):
             msg = str(toTell[i]) +  "\t" +str(attempts[i])
