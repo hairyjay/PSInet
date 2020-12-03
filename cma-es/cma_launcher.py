@@ -19,12 +19,123 @@ import numpy as np
 #import torch.nn.functional as F
 #import torch.optim as optim
 
+modelConf='''batch_type: folded
+batch_size: 32
+accum_grad: 8
+max_epoch: 100
+patience: none
+# The initialization method for model parameters
+init: xavier_uniform
+best_model_criterion:
+-   - valid
+    - acc
+    - max
+keep_nbest_models: 10
+
+#location doesn't matter but let's keep it in order for ease of reading
+frontend: default
+frontend_conf:
+    n_mels: %s
+    win_length: %s
+    hop_length: %s
+
+encoder: transformer
+encoder_conf:
+    output_size: 256
+    attention_heads: 4
+    linear_units: 2048
+    num_blocks: 12
+    dropout_rate: 0.1
+    positional_dropout_rate: 0.1
+    attention_dropout_rate: 0.0
+    input_layer: conv2d
+    normalize_before: true
+
+decoder: transformer
+decoder_conf:
+    attention_heads: 4
+    linear_units: 2048
+    num_blocks: 6
+    dropout_rate: 0.1
+    positional_dropout_rate: 0.1
+    self_attention_dropout_rate: 0.0
+    src_attention_dropout_rate: 0.0
+
+model_conf:
+    ctc_weight: 0.3
+    lsm_weight: 0.1
+    length_normalized_loss: false
+
+optim: adam
+optim_conf:
+    lr: 0.005
+scheduler: warmuplr
+scheduler_conf:
+    warmup_steps: 30000
+'''
+
+# modelConf='''batch_type: folded
+# batch_size: 64
+# accum_grad: 2
+# max_epoch: 200
+# patience: none
+# # The initialization method for model parameters
+# init: xavier_uniform
+# best_model_criterion:
+# -   - valid
+#     - acc
+#     - max
+# keep_nbest_models: 10
+
+# #location doesn't matter but let's keep it in order for ease of reading
+# frontend: default
+# frontend_conf:
+#     n_mels: %s
+#     win_length: %s
+#     hop_length: %s
+
+
+# encoder: transformer
+# encoder_conf:
+#     output_size: 256
+#     attention_heads: 4
+#     linear_units: 2048
+#     num_blocks: 12
+#     dropout_rate: 0.1
+#     positional_dropout_rate: 0.1
+#     attention_dropout_rate: 0.0
+#     input_layer: conv2d
+#     normalize_before: true
+
+# decoder: transformer
+# decoder_conf:
+#     attention_heads: 4
+#     linear_units: 2048
+#     num_blocks: 6
+#     dropout_rate: 0.1
+#     positional_dropout_rate: 0.1
+#     self_attention_dropout_rate: 0.0
+#     src_attention_dropout_rate: 0.0
+
+# model_conf:
+#     ctc_weight: 0.3
+#     lsm_weight: 0.1
+#     length_normalized_loss: false
+
+# optim: adam
+# optim_conf:
+#     lr: 0.005
+# scheduler: warmuplr
+# scheduler_conf:
+#     warmup_steps: 20000
+# '''
+
 import concurrent.futures
 
-BOUNDS = [np.array([4,  15,  5,]),
-          np.array([32, 40, 15,])]
+BOUNDS = [np.array([0, 0, 0]),
+          np.array([1, 1,.5])]
 
-init = np.array([5,25,10])
+init = np.array([.428, .333, .28])
 
 def launch_run(hyperparameters, cuda_dev=-1, dup = ""):
     """
@@ -41,11 +152,16 @@ def launch_run(hyperparameters, cuda_dev=-1, dup = ""):
         :return: evaluation metric
     """
 
-    hyperparameters = hyperparameters.astype(int)
+    # hyperparameters = hyperparameters.astype(int)
     num_mel_bins, frame_length, frame_shift = hyperparameters
-    num_mel_bins *= 5
+    num_mel_bins = int(140*num_mel_bins + 20)
+    frame_length = int(768*frame_length + 256)
+    frame_shift = int(100*frame_shift + 100)
 
     print("RUNNING: " + dup + "\nHYPERPARAMETER VALUES: num_mel_bins = %s, frame_length = %s, frame_shift = %s\n\n\n"%(num_mel_bins, frame_length, frame_shift))
+
+
+    #return np.sum(hyperparameters**2)
 
     if(cuda_dev == -1):
         raise Exception("incorrect cuda device")
@@ -55,19 +171,25 @@ def launch_run(hyperparameters, cuda_dev=-1, dup = ""):
     #basepath = "../espnet/egs2/an4%s/asr1/"%(dup)
 
     #command
-    expType = 'fbank_pitch'
+    expType = 'raw'
     cmd = "CUDA_VISIBLE_DEVICES=%s ./run.sh --ngpu 1 --feats_type %s" % (cuda_dev, expType)
-    
-    
+
+
+    #save the parameters
+    conf = modelConf % (num_mel_bins, frame_length, frame_shift)
+    with open(basepath + "conf/train_asr_transformer.yaml", 'w') as f:
+        f.write(conf)
+
+
     #modify the files at the basepath
-    fbank = "\n".join(["--sample-frequency=16000", "--num-mel-bins=%s"%(num_mel_bins)])
+    # fbank = "\n".join(["--sample-frequency=16000", "--num-mel-bins=%s"%(num_mel_bins)])
 
-    with open(basepath + "conf/fbank.conf", 'w') as f:
-        f.write(fbank)
+    # with open(basepath + "conf/fbank.conf", 'w') as f:
+    #     f.write(fbank)
 
-    pitch = "\n".join(["--sample-frequency=16000", "--frame-length=%s"%(frame_length), "--frame-shift=%s" %(frame_shift)])
-    with open(basepath + "conf/pitch.conf", 'w') as f:
-        f.write(pitch)
+    # pitch = "\n".join(["--sample-frequency=16000", "--frame-length=%s"%(frame_length), "--frame-shift=%s" %(frame_shift)])
+    # with open(basepath + "conf/pitch.conf", 'w') as f:
+    #     f.write(pitch)C
 
     #write a bash file to run
 
@@ -78,7 +200,7 @@ def launch_run(hyperparameters, cuda_dev=-1, dup = ""):
     fh.write(cmd + "\n")
 
     fh.close()
-    
+
     #run the file and wait to finish
 
     results = subprocess.run(['bash', 'run%s.sh'%(dup)], stderr=subprocess.PIPE, text=True)
@@ -133,65 +255,84 @@ options.set('integer_variable', list(range(len(init))))
 #options.set('maxfevals', 32)
 #options.set('maxfevals', 8)
 #options.set('CMA_cmean', 4)
-options.set('CMA_stds', [4,4,2])
+options.set('CMA_stds', [.2,.2,.08])
 
 es = cma.CMAEvolutionStrategy(init, 4, options)
 f = cma.s.ft.IntegerMixedFunction(launch_run, np.arange(5))
 
 detailLog = open("allRuns.log", 'w')
 
-maxFevals = 32
+maxFevals = 20
 curFevals = 0
 
 #for i in range(5):
 #    print(es.ask())
 
 while curFevals != maxFevals:
-    #attempts = es.ask()
+    attempts = es.ask()
 
     #evaluate the 2 attempts by multi-threading the launch_run function
     with concurrent.futures.ThreadPoolExecutor() as executor:
-        #future1 = executor.submit(launch_run, attempts[0], 6)
-        #future2 = executor.submit(launch_run, attempts[1], 7, "-dup")
-        future1 = executor.submit(try_values, es, 6)
-        future2 = executor.submit(try_values, es, 7, "-dup")
-        
+        # future1 = executor.submit(try_values, es, 0)
+        # future2 = executor.submit(try_values, es, 1, "-dup")
+        # future3 = executor.submit(try_values, es, 2, "-dup2")
+        # attempt1 = es.ask(number=1)[0]
+        # attempt2 = es.ask(number=1)[0]
+        # attempt3 = es.ask(number=1)[0]
+        future1 = executor.submit(launch_run, attempts[0], 0)
+        future2 = executor.submit(launch_run, attempts[1], 1, "-dup")
+        # future3 = executor.submit(launch_run, attempt1, 2, "-dup2")
+        #future4 = executor.submit(try_values, es, 3, "-dup3")
         if(future1.result() != 1000):
             curFevals += 1
         if(future2.result() != 1000):
             curFevals += 1
+        # if(future3.result() != 1000):
+        #     curFevals += 1
+        #if(future4.result() != 1000):
+         #   curFevals += 1
+        # attempts = [future1.result()[0], future2.result()[0]]
+        # toTell = [future1.result()[1], future2.result()[1]]
 
-        attempts = [future1.result()[0], future2.result()[0]]
-        toTell = [future1.result()[1], future2.result()[1]]
-        #toTell = [future1.result(), future2.result()]
-        #future1 = executor.submit(launch_run, attempts[2], 6)
-        #future2 = executor.submit(launch_run, attempts[3], 7, "-dup")
-        
-        #if(future1.result() != 1000):
-            #curFevals += 1
-        #if(future2.result() != 1000):
-            #curFevals += 1
+        # attempts = [future1.result()[0],
+        #             future2.result()[0],
+        #             future3.result()[0],
+        #  #           future4.result()[0],
+        # ]
 
-        #toTell += [future1.result(), future2.result()]
+        # attempt = [attempt1,
+        #            attempt2,
+        # ]
 
-        #for i in range(4):
-        future1 = executor.submit(try_values, es, 6)
-        future2 = executor.submit(try_values, es, 7, "-dup")
-        
+        toTell =[future1.result(),
+                 future2.result(),
+                 #future3.result()[1],
+        #         future4.result()[1],
+        ]
+        future1 = executor.submit(launch_run, attempts[2], 0)
+        future2 = executor.submit(launch_run, attempts[3], 1, "-dup")
         if(future1.result() != 1000):
             curFevals += 1
         if(future2.result() != 1000):
             curFevals += 1
-
-        attempts += [future1.result()[0], future2.result()[0]]
-        toTell += [future1.result()[1], future2.result()[1]]
-        
+        # future1 = executor.submit(try_values, es, 0)
+        # future2 = executor.submit(try_values, es, 1, "-dup")
+        # attempts += [future1.result()[0],
+        #             future2.result()[0],
+        #             future3.result()[0],
+        #  #           future4.result()[0],
+        # ]
+        toTell +=[future1.result(),
+                 future2.result(),
+                 #future3.result()[1],
+        #         future4.result()[1],
+        ]
         for i in range(4):
             msg = str(toTell[i]) +  "\t" +str(attempts[i])
             detailLog.write(msg + "\n")
 
         detailLog.flush()
-        
+
 
         print(toTell)
 
