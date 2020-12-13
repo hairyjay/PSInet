@@ -1,6 +1,9 @@
-[submodule "espnet"]
+[submodule "CMA-ES Experiment/espnet"]
 	path = CMA-ES Experiment/espnet
 	url = git@professional.github.com:Rav830/espnet.git
-[submodule "fairseq"]
-	path = fairseq
+[submodule "Wav2Vec Experiment/espnet"]
+	path = Wav2Vec Experiment/espnet
+	url = https://github.com/casssie-zhang/espnet.git
+[submodule "Wav2Vec Experiment/fairseq"]
+	path = Wav2Vec Experiment/fairseq
 	url = https://github.com/casssie-zhang/fairseq.git
