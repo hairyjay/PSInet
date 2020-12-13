@@ -1,0 +1,65 @@
+(psinet) ras306@magnolia:~/Classwork/Project/PSInet/espnet/egs2/wsj/asr1$ CUDA_VISIBLE_DEVICES=3 ./run.sh --ngpu 1 --skip_data_prep true --skip_train false
+2020-11-12T13:17:11 (asr.sh:214:main) ./asr.sh --lang en --use_lm false --token_type char --nbpe 80 --nlsyms_txt data/nlsyms.txt --lm_config conf/train_lm_transformer.yaml --asr_config conf/train_asr_transformer.yaml --inference_config conf/decode.yaml --train_set train_si284 --valid_set test_dev93 --test_sets test_dev93 test_eval92 --bpe_train_text data/train_si284/text --lm_train_text data/train_si284/text data/local/other_text/text --ngpu 1 --skip_data_prep true --skip_train false
+2020-11-12T13:17:16 (asr.sh:625:main) Skip the stages for data preparation
+2020-11-12T13:17:16 (asr.sh:806:main) Stage 6-8: Skip lm-related stages: use_lm=false
+2020-11-12T13:17:16 (asr.sh:813:main) Stage 9: ASR collect stats: train_set=dump/raw/train_si284, valid_set=dump/raw/test_dev93
+2020-11-12T13:17:18 (asr.sh:863:main) Generate 'exp/asr_stats_raw_char/run.sh'. You can resume the process from stage 9 using this script
+2020-11-12T13:17:18 (asr.sh:867:main) ASR collect-stats started... log: 'exp/asr_stats_raw_char/logdir/stats.*.log'
+/afs/cs.pitt.edu/usr0/ras306/miniconda3/envs/psinet/bin/python3 /afs/cs.pitt.edu/usr0/ras306/Classwork/Project/PSInet/espnet/espnet2/bin/aggregate_stats_dirs.py --input_dir exp/asr_stats_raw_char/logdir/stats.1 --input_dir exp/asr_stats_raw_char/logdir/stats.2 --input_dir exp/asr_stats_raw_char/logdir/stats.3 --input_dir exp/asr_stats_raw_char/logdir/stats.4 --input_dir exp/asr_stats_raw_char/logdir/stats.5 --input_dir exp/asr_stats_raw_char/logdir/stats.6 --input_dir exp/asr_stats_raw_char/logdir/stats.7 --input_dir exp/asr_stats_raw_char/logdir/stats.8 --input_dir exp/asr_stats_raw_char/logdir/stats.9 --input_dir exp/asr_stats_raw_char/logdir/stats.10 --input_dir exp/asr_stats_raw_char/logdir/stats.11 --input_dir exp/asr_stats_raw_char/logdir/stats.12 --input_dir exp/asr_stats_raw_char/logdir/stats.13 --input_dir exp/asr_stats_raw_char/logdir/stats.14 --input_dir exp/asr_stats_raw_char/logdir/stats.15 --input_dir exp/asr_stats_raw_char/logdir/stats.16 --input_dir exp/asr_stats_raw_char/logdir/stats.17 --input_dir exp/asr_stats_raw_char/logdir/stats.18 --input_dir exp/asr_stats_raw_char/logdir/stats.19 --input_dir exp/asr_stats_raw_char/logdir/stats.20 --input_dir exp/asr_stats_raw_char/logdir/stats.21 --input_dir exp/asr_stats_raw_char/logdir/stats.22 --input_dir exp/asr_stats_raw_char/logdir/stats.23 --input_dir exp/asr_stats_raw_char/logdir/stats.24 --input_dir exp/asr_stats_raw_char/logdir/stats.25 --input_dir exp/asr_stats_raw_char/logdir/stats.26 --input_dir exp/asr_stats_raw_char/logdir/stats.27 --input_dir exp/asr_stats_raw_char/logdir/stats.28 --input_dir exp/asr_stats_raw_char/logdir/stats.29 --input_dir exp/asr_stats_raw_char/logdir/stats.30 --input_dir exp/asr_stats_raw_char/logdir/stats.31 --input_dir exp/asr_stats_raw_char/logdir/stats.32 --output_dir exp/asr_stats_raw_char
+2020-11-12T13:22:20 (asr.sh:914:main) Stage 10: ASR Training: train_set=dump/raw/train_si284, valid_set=dump/raw/test_dev93
+2020-11-12T13:22:20 (asr.sh:981:main) Generate 'exp/asr_train_asr_transformer_raw_char/run.sh'. You can resume the process from stage 10 using this script
+2020-11-12T13:22:20 (asr.sh:985:main) ASR training started... log: 'exp/asr_train_asr_transformer_raw_char/train.log'
+2020-11-12 13:22:20,880 (launch:95) INFO: /afs/cs.pitt.edu/usr0/ras306/miniconda3/envs/psinet/bin/python3 /afs/cs.pitt.edu/usr0/ras306/Classwork/Project/PSInet/espnet/espnet2/bin/launch.py --cmd 'run.pl --name exp/asr_train_asr_transformer_raw_char/train.log' --log exp/asr_train_asr_transformer_raw_char/train.log --ngpu 1 --num_nodes 1 --init_file_prefix exp/asr_train_asr_transformer_raw_char/.dist_init_ --multiprocessing_distributed true -- python3 -m espnet2.bin.asr_train --use_preprocessor true --bpemodel none --token_type char --token_list data/token_list/char/tokens.txt --non_linguistic_symbols data/nlsyms.txt --cleaner none --g2p none --valid_data_path_and_name_and_type dump/raw/test_dev93/wav.scp,speech,sound --valid_data_path_and_name_and_type dump/raw/test_dev93/text,text,text --valid_shape_file exp/asr_stats_raw_char/valid/speech_shape --valid_shape_file exp/asr_stats_raw_char/valid/text_shape.char --resume true --fold_length 80000 --fold_length 150 --output_dir exp/asr_train_asr_transformer_raw_char --config conf/train_asr_transformer.yaml --frontend_conf fs=16k --normalize=global_mvn --normalize_conf stats_file=exp/asr_stats_raw_char/train/feats_stats.npz --train_data_path_and_name_and_type dump/raw/train_si284/wav.scp,speech,sound --train_data_path_and_name_and_type dump/raw/train_si284/text,text,text --train_shape_file exp/asr_stats_raw_char/train/speech_shape --train_shape_file exp/asr_stats_raw_char/train/text_shape.char
+2020-11-12 13:22:20,918 (launch:349) INFO: log file: exp/asr_train_asr_transformer_raw_char/train.log
+2020-11-13T10:25:59 (asr.sh:1059:main) Stage 11: Decoding: training_dir=exp/asr_train_asr_transformer_raw_char
+2020-11-13T10:25:59 (asr.sh:1084:main) Generate 'exp/asr_train_asr_transformer_raw_char/decode_asr_model_valid.acc.ave/run.sh'. You can resume the process from stage 11 using this script
+2020-11-13T10:25:59 (asr.sh:1117:main) Decoding started... log: 'exp/asr_train_asr_transformer_raw_char/decode_asr_model_valid.acc.ave/test_dev93/logdir/asr_inference.*.log'
+2020-11-13T10:40:53 (asr.sh:1117:main) Decoding started... log: 'exp/asr_train_asr_transformer_raw_char/decode_asr_model_valid.acc.ave/test_eval92/logdir/asr_inference.*.log'
+2020-11-13T10:50:05 (asr.sh:1140:main) Stage 12: Scoring
+/afs/cs.pitt.edu/usr0/ras306/miniconda3/envs/psinet/bin/python3 /afs/cs.pitt.edu/usr0/ras306/Classwork/Project/PSInet/espnet/espnet2/bin/tokenize_text.py -f 2- --input - --output - --token_type char --non_linguistic_symbols data/nlsyms.txt --remove_non_linguistic_symbols true --cleaner none
+/afs/cs.pitt.edu/usr0/ras306/miniconda3/envs/psinet/bin/python3 /afs/cs.pitt.edu/usr0/ras306/Classwork/Project/PSInet/espnet/espnet2/bin/tokenize_text.py -f 2- --input - --output - --token_type char --non_linguistic_symbols data/nlsyms.txt --remove_non_linguistic_symbols true
+2020-11-13T10:50:09 (asr.sh:1239:main) Write cer result in exp/asr_train_asr_transformer_raw_char/decode_asr_model_valid.acc.ave/test_dev93/score_cer/result.txt
+|   SPKR     |  # Snt      # Wrd   |   Corr       Sub        Del        Ins       Err      S.Err   |
+|   Sum/Avg  |   503       48634   |   96.2       2.0        1.7        1.1       4.8       84.1   |
+/afs/cs.pitt.edu/usr0/ras306/miniconda3/envs/psinet/bin/python3 /afs/cs.pitt.edu/usr0/ras306/Classwork/Project/PSInet/espnet/espnet2/bin/tokenize_text.py -f 2- --input - --output - --token_type word --non_linguistic_symbols data/nlsyms.txt --remove_non_linguistic_symbols true --cleaner none
+/afs/cs.pitt.edu/usr0/ras306/miniconda3/envs/psinet/bin/python3 /afs/cs.pitt.edu/usr0/ras306/Classwork/Project/PSInet/espnet/espnet2/bin/tokenize_text.py -f 2- --input - --output - --token_type word --non_linguistic_symbols data/nlsyms.txt --remove_non_linguistic_symbols true
+2020-11-13T10:50:10 (asr.sh:1239:main) Write wer result in exp/asr_train_asr_transformer_raw_char/decode_asr_model_valid.acc.ave/test_dev93/score_wer/result.txt
+|   SPKR     |   # Snt    # Wrd   |   Corr        Sub        Del       Ins        Err      S.Err   |
+|   Sum/Avg  |    503      8234   |   86.5       12.2        1.3       1.4       15.0       82.5   |
+/afs/cs.pitt.edu/usr0/ras306/miniconda3/envs/psinet/bin/python3 /afs/cs.pitt.edu/usr0/ras306/Classwork/Project/PSInet/espnet/espnet2/bin/tokenize_text.py -f 2- --input - --output - --token_type char --non_linguistic_symbols data/nlsyms.txt --remove_non_linguistic_symbols true --cleaner none
+/afs/cs.pitt.edu/usr0/ras306/miniconda3/envs/psinet/bin/python3 /afs/cs.pitt.edu/usr0/ras306/Classwork/Project/PSInet/espnet/espnet2/bin/tokenize_text.py -f 2- --input - --output - --token_type char --non_linguistic_symbols data/nlsyms.txt --remove_non_linguistic_symbols true
+2020-11-13T10:50:13 (asr.sh:1239:main) Write cer result in exp/asr_train_asr_transformer_raw_char/decode_asr_model_valid.acc.ave/test_eval92/score_cer/result.txt
+|   SPKR     |   # Snt     # Wrd   |   Corr        Sub        Del       Ins        Err      S.Err   |
+|   Sum/Avg  |    333      33341   |   97.3        1.5        1.2       1.0        3.7       77.5   |
+/afs/cs.pitt.edu/usr0/ras306/miniconda3/envs/psinet/bin/python3 /afs/cs.pitt.edu/usr0/ras306/Classwork/Project/PSInet/espnet/espnet2/bin/tokenize_text.py -f 2- --input - --output - --token_type word --non_linguistic_symbols data/nlsyms.txt --remove_non_linguistic_symbols true --cleaner none
+/afs/cs.pitt.edu/usr0/ras306/miniconda3/envs/psinet/bin/python3 /afs/cs.pitt.edu/usr0/ras306/Classwork/Project/PSInet/espnet/espnet2/bin/tokenize_text.py -f 2- --input - --output - --token_type word --non_linguistic_symbols data/nlsyms.txt --remove_non_linguistic_symbols true
+2020-11-13T10:50:14 (asr.sh:1239:main) Write wer result in exp/asr_train_asr_transformer_raw_char/decode_asr_model_valid.acc.ave/test_eval92/score_wer/result.txt
+|   SPKR     |   # Snt     # Wrd   |   Corr       Sub        Del        Ins        Err      S.Err   |
+|   Sum/Avg  |    333       5643   |   89.3       9.8        0.9        1.3       12.0       73.3   |
+<!-- Generated by scripts/utils/show_asr_result.sh -->
+# RESULTS
+## Environments
+- date: `Fri Nov 13 10:50:19 EST 2020`
+- python version: `3.7.9 (default, Aug 31 2020, 12:42:55)  [GCC 7.3.0]`
+- espnet version: `espnet 0.9.5`
+- pytorch version: `pytorch 1.4.0`
+- Git hash: `a8e0835f542d9706e92ada930809a46acbdc9987`
+  - Commit date: `Tue Nov 10 20:37:28 2020 -0500`
+
+## asr_train_asr_transformer_raw_char
+### WER
+
+|dataset|Snt|Wrd|Corr|Sub|Del|Ins|Err|S.Err|
+|---|---|---|---|---|---|---|---|---|
+|decode_asr_model_valid.acc.ave/test_dev93|503|8234|86.5|12.2|1.3|1.4|15.0|82.5|
+|decode_asr_model_valid.acc.ave/test_eval92|333|5643|89.3|9.8|0.9|1.3|12.0|73.3|
+
+### CER
+
+|dataset|Snt|Wrd|Corr|Sub|Del|Ins|Err|S.Err|
+|---|---|---|---|---|---|---|---|---|
+|decode_asr_model_valid.acc.ave/test_dev93|503|48634|96.2|2.0|1.7|1.1|4.8|84.1|
+|decode_asr_model_valid.acc.ave/test_eval92|333|33341|97.3|1.5|1.2|1.0|3.7|77.5|
+
+2020-11-13T10:50:23 (asr.sh:1340:main) Skip the uploading stages
+2020-11-13T10:50:23 (asr.sh:1343:main) Successfully finished. [elapsed=77592s]

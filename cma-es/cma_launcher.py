@@ -36,7 +36,7 @@ keep_nbest_models: 10
 frontend: default
 frontend_conf:
     n_mels: %s
-    win_length: %s
+    n_fft: %s
     hop_length: %s
 
 encoder: transformer
@@ -158,7 +158,7 @@ def launch_run(hyperparameters, cuda_dev=-1, dup = ""):
     frame_length = int(768*frame_length + 256)
     frame_shift = int(100*frame_shift + 100)
 
-    print("RUNNING: " + dup + "\nHYPERPARAMETER VALUES: num_mel_bins = %s, frame_length = %s, frame_shift = %s\n\n\n"%(num_mel_bins, frame_length, frame_shift))
+    print("RUNNING: " + dup + "\nHYPERPARAMETER VALUES: num_mel_bins = %s, n_ftt = %s, frame_shift = %s\n\n\n"%(num_mel_bins, frame_length, frame_shift))
 
 
     #return np.sum(hyperparameters**2)
@@ -231,7 +231,7 @@ def launch_run(hyperparameters, cuda_dev=-1, dup = ""):
         print(retval)
 
     #delete the dump and exp folder
-    delRes = subprocess.run(["rm", "-r", basepath+"dump/"])
+    #delRes = subprocess.run(["rm", "-r", basepath+"dump/"])
     delRes = subprocess.run(["rm", "-r", basepath+"exp/"])
 
     return retval
