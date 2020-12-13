@@ -1,5 +1,5 @@
 [submodule "espnet"]
-	path = espnet
+	path = CMA-ES Experiment/espnet
 	url = git@professional.github.com:Rav830/espnet.git
 [submodule "fairseq"]
 	path = fairseq
