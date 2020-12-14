@@ -7,9 +7,8 @@ We followed instructions in fairseq, which provides us ways to fine-tune on Libr
 
 ### Data Preparation
 We prepared WSJ in the same way, you can find detailed implementation in `Wav2Vec Experiment/wav2vec_scripts/fine-tune-wsj-data_prep.ipynb`.
-First remember to install fairseq:
+First remember to install fairseq using the submodule supplied in this github repo:
 ```
-git clone https://github.com/pytorch/fairseq
 cd fairseq
 pip install --editable ./
 ```
@@ -22,7 +21,7 @@ pip install --editable ./
 3. Prepared a letter dictionary `dict.ltr.txt`
 4. created a parallel labels files corresponding line by line to the files in train.tsv, dev.tsv, this step gave us four files:
 `train.ltr`, `train.wrd`, `valid.ltr`, `valid.wrd`
-5. train_si284 has approximately 100 hours of audio data so we used examples/wav2vec/config/finetuning/base_100h.yaml as our configuration file.
+5. train\_si284 has approximately 100 hours of audio data so we used examples/wav2vec/config/finetuning/base\_100h.yaml as our configuration file.
 
 Note: put all above files in the same folder as our /path/to/data
 
