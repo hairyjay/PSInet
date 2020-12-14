@@ -12,9 +12,9 @@ To install Espnet for use read the espnetInstallConda instructions.
 
 ## Replicating and Reading Results
 
-Results can be obtained by replicating the experiments within their respective folders. Instructions can be found within each folder.
+Since we have two directions for our work, explored independently of each other, we separated our experiments off into two different folders, `CMA-ES Experiments` and `Wav2Vec Experiments`.
 
-Since we have two directions for our work, both explored independently of each other we separated our experiments off into two different folders, CMA-ES Experiments and Wav2Vec Experiments.
+Results can be obtained by replicating the experiments within their respective folders. Instructions can be found within each folder.
 
 Both of these folders contain a submodules of epsnet to handle their work.
 
